@@ -79,12 +79,11 @@ if {![regexp $REPORT_PREFIX $FLOORPLAN_BLOCK_NAME]} {
 if {$REPORT_QOR_REPORT_POWER == "true" || ($REPORT_QOR_REPORT_POWER == "auto" && ($OPTIMIZATION_FLOW == "hplp" || $OPTIMIZATION_FLOW == "arlp"))} { 
 	puts "RM-info: Reporting power ...\n"
 	## For hierarchical designs, use report_power -blocks to get the power consumption for the top and sub-blocks separately
-	# if {$USE_ABSTRACTS_FOR_BLOCKS != "" && $USE_ABSTRACTS_FOR_POWER_ANALYSIS == "true"} {
-	# 	redirect -file ${REPORTS_DIR}/${REPORT_PREFIX}.report_power {report_power -blocks -verbose -scenarios [all_scenarios]}
-	# } else {
-	# 	redirect -file ${REPORTS_DIR}/${REPORT_PREFIX}.report_power {report_power -verbose -scenarios [all_scenarios]}
-	# }
-	redirect -file ${REPORTS_DIR}/${REPORT_PREFIX}.report_power {report_power -verbose -scenarios [all_scenarios]}
+	if {$USE_ABSTRACTS_FOR_BLOCKS != "" && $USE_ABSTRACTS_FOR_POWER_ANALYSIS == "true"} {
+		redirect -file ${REPORTS_DIR}/${REPORT_PREFIX}.report_power {report_power -blocks -verbose -scenarios [all_scenarios]}
+	} else {
+		redirect -file ${REPORTS_DIR}/${REPORT_PREFIX}.report_power {report_power -verbose -scenarios [all_scenarios]}
+	}
 	redirect -file ${REPORTS_DIR}/${REPORT_PREFIX}.report_clock_qor.power {report_clock_qor -type power}
 }
 

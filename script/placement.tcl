@@ -1,4 +1,4 @@
-set SCRIPT_DIR ../script
+set SCRIPT_DIR ../../../script
 
 puts "INFO: Sourcing ${SCRIPT_DIR}/project_setup.tcl"
 source ${SCRIPT_DIR}/project_setup.tcl

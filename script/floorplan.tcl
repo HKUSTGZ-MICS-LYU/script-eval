@@ -1,4 +1,4 @@
-set SCRIPT_DIR ../script
+set SCRIPT_DIR ../../../script
 
 puts "INFO: Sourcing ${SCRIPT_DIR}/project_setup.tcl"
 source ${SCRIPT_DIR}/project_setup.tcl
@@ -11,6 +11,7 @@ open_lib $DESIGN_LIBRARY
 copy_block -from $SRC_BLOCK_NAME -to $DST_BLOCK_NAME
 current_block $DST_BLOCK_NAME
 link_block
+
 
 puts "INFO: Sourcing ${SCRIPT_DIR}/common_setting.tcl"
 source ${SCRIPT_DIR}/common_setting.tcl
@@ -59,7 +60,7 @@ compile_fusion -check_only
 compile_fusion -to logic_opto
 
 puts "INFO: Floorplan creation"
-initialize_floorplan -shape R -core_utilization [expr $UTIL/100.0] -side_ratio {1 1} \
+initialize_floorplan -shape [dict get $params fp_shape] -core_utilization [expr $UTIL/100.0] -side_ratio {1 1} \
 -core_offset [list $boundary_offset_x $boundary_offset_y]   -flip_first_row true
 
 puts "INFO: Wire track creation"
@@ -206,5 +207,4 @@ if {$REPORT_QOR} {
         source ${SCRIPT_DIR}/report_qor.tcl
 }
 
-exit 
-
+exit

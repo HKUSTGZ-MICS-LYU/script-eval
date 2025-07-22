@@ -35,7 +35,7 @@ set_lib_cell_purpose -include none [get_lib_cells {*/CKLNQD5BWP240H8P57CPDULVT *
 set_lib_cell_purpose -include cts [get_lib_cells {*/CKLNQD5BWP240H8P57CPDULVT */CKLNQD6BWP240H8P57CPDULVT */CKLNQD8BWP240H8P57CPDULVT}]
 
 #Dont use scan cells
-set_lib_cell_purpose -include none [get_lib_cells */S*]
+# set_lib_cell_purpose -include none [get_lib_cells */S*]
 
 set tieCell [get_lib_cells */TIE*]
 foreach_in_collection item $tieCell {
@@ -44,6 +44,3 @@ foreach_in_collection item $tieCell {
 }
 
 set sh_continue_on_error false
-
-
-

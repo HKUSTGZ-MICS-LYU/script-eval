@@ -7,7 +7,7 @@ clock_freq=$2
 
 echo Building scrypt commit $scrypt_commit, clock $clock_freq MHz, eval commit $eval_commit
 
-module load vcs/W-2024.09-SP2 verdi/W-2024.09-SP2 fusioncompiler/W-2024.09-SP3 icvalidator/W-2024.09-SP4 prime/W-2024.09-SP4
+
 
 # clone and checkout
 build_dir=${eval_commit}_${scrypt_commit}_${clock_freq}
@@ -28,6 +28,8 @@ echo -n $clock_freq > target_MHz
 
 clock_period=$(printf '%f' $(echo "scale=4; 1000/$clock_freq" | bc))
 
+# load tools
+module load vcs/W-2024.09-SP2 verdi/W-2024.09-SP2 fusioncompiler/W-2024.09-SP3 icvalidator/W-2024.09-SP4 prime/W-2024.09-SP4
 # simulate the design first
 vcs -full64 -R -debug_acc+all -debug_region=verilog+lib+cell -sverilog -top salsa8d_tb \
 	-l ./log/sim_rtl.log \
@@ -60,9 +62,9 @@ vcs -full64 -R -debug_acc+all -debug_region=verilog+lib+cell -sverilog -top sals
 	+define+T=$clock_period \
 	../../../tb/salsa8d_tb.sv \
 	./out/salsa8d.v.sta \
-	/data/N6/TSMCHOME/digital/Front_End/verilog/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt.v \
-	/data/N6/TSMCHOME/digital/Front_End/verilog/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt.v \
-	/data/N6/TSMCHOME/digital/Front_End/verilog/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt.v
+	/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/verilog/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt.v \
+	/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/verilog/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt.v \
+	/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/verilog/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt.v
 
 # get start & end time
 grep CUT log/sim_netlist.log | awk '{ print $2 - 0, $3 - 0 }' > stet

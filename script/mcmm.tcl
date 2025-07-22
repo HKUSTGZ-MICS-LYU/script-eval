@@ -32,13 +32,13 @@ foreach scenario ${scenarios} {
     set_clock_transition -rise 0.1 [get_clocks clk]
     set_clock_transition -fall 0.1 [get_clocks clk]
 
-    set_input_delay 0.1 -clock clk [get_ports load]
-    set_driving_cell -lib_cell BUFFD10BWP240H8P57CPDSVT [get_ports load]
-    set_input_delay 0.1 -clock clk [get_ports state_in]
-    set_driving_cell -lib_cell BUFFD10BWP240H8P57CPDSVT [get_ports state_in]
+    # set_input_delay 0.1 -clock clk [get_ports load]
+    # set_driving_cell -lib_cell BUFFD10BWP240H8P57CPDSVT [get_ports load]
+    # set_input_delay 0.1 -clock clk [get_ports state_in]
+    # set_driving_cell -lib_cell BUFFD10BWP240H8P57CPDSVT [get_ports state_in]
 
-    set_output_delay 0.1 -clock clk [get_ports done]
-    set_output_delay 0.1 -clock clk [get_ports state_out]
+    # set_output_delay 0.1 -clock clk [get_ports done]
+    # set_output_delay 0.1 -clock clk [get_ports state_out]
 }
 
 current_corner Fast

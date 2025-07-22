@@ -1,6 +1,6 @@
 set TECH_ROOT 			""
 set LIB_ROOT 			""
-set SCRIPT_DIR			../script
+set SCRIPT_DIR			../../../script
 set LOGS_DIR			./log
 set REPORTS_DIR			./rpt
 set OUTPUTS_DIR			./out
@@ -14,9 +14,24 @@ set target_MHz_f [open "./target_MHz" r]
 set target_MHz [read $target_MHz_f]
 close $target_MHz_f
 
-set UTIL				"70"
+set design_name_f [open "./design_name" r]
+set design_name [read $design_name_f]
+close $design_name_f
+
+# ################################################################################
+# ### Backend Dse Config
+# ################################################################################
+# set group_f [open "./backend_dse" r]
+# set group [read $group_f]
+# source ${SCRIPT_DIR}/backend_dse.tcl
+# set params [load_config $group]
+# puts "utilization: [dict get $params utilization]"
+# ################################################################################
+
+###########################################################################
+set UTIL				"[dict get $params utilization]"
 set CLOCK_PERIOD		[expr 1000.0 / $target_MHz]
-set DESIGN_NAME        	"salsa8d" 
+set DESIGN_NAME        	"${design_name}" 
 set DESIGN_LIBRARY		"${DATABASE_DIR}/${DESIGN_NAME}.U${UTIL}.nlib"
 set SDC_FILE                    ""
 set DEF_FILE                    ""
@@ -58,18 +73,26 @@ set TAP_CELL 				"TAPCELLBWP240H8P57CPDSVT"
 ################################################################################
 ###	Tech file and library setting
 ################################################################################
-set TECH_FILE 			"/data/N6/n6pdk/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/TechFile/Standard/VHV/PRTF_ICC2_N6_11M_1X1Xa1Ya5Y2Z_UTRDL_M1P57_M2P40_M3P44_M4P76_M5P76_M6P76_M7P76_M8P76_M9P76_H240.10b.tf"
-set ANTENNA_RULE_FILE	"/data/N6/n6pdk/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/SCM/PRTF_ICC2_N6_11M_Antenna.10b.tcl"
-set DFM_TCL_FILE 		"/data/N6/n6pdk/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/script/PRTF_ICC2_N6_DFM_via_swap_reference_command.10b.tcl"
-
-set NXTGRD_PATH     "/data/N6/n6pdk/tech_files/RC_Star-RCXT_cln6_1p11m_1x1xa1ya5y2z_mim_ut-alrdl_DPT_5corners_1.0p1a"
+set TECH_FILE 			"/nfs/data/foundry/tsmc/tsmc6/apr/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/TechFile/Standard/VHV/PRTF_ICC2_N6_11M_1X1Xa1Ya5Y2Z_UTRDL_M1P57_M2P40_M3P44_M4P76_M5P76_M6P76_M7P76_M8P76_M9P76_H240.10b.tf"
+set ANTENNA_RULE_FILE	"/nfs/data/foundry/tsmc/tsmc6/apr/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/SCM/PRTF_ICC2_N6_11M_Antenna.10b.tcl"
+set DFM_TCL_FILE 		"/nfs/data/foundry/tsmc/tsmc6/apr/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/script/PRTF_ICC2_N6_DFM_via_swap_reference_command.10b.tcl"
+################################################################################
+### Needs to be modified
+################################################################################
+set NXTGRD_PATH     "/nfs/data/foundry/tsmc/tsmc6/rc_tech/starrc/RC_Star-RCXT_cln6_1p11m_1x1xa1ya5y2z_mim_ut-alrdl_DPT_5corners_1.0p1a"
 set NXTGRD_MIN_FILE "${NXTGRD_PATH}/rcbest/Tech/rcbest_CCbest_T/cln6_1p11m_1x1xa1ya5y2z_mim_ut-alrdl_rcbest_CCbest_T.nxtgrd"
 set NXTGRD_NOM_FILE "${NXTGRD_PATH}/typical/Tech/typical/cln6_1p11m_1x1xa1ya5y2z_mim_ut-alrdl_typical.nxtgrd"
 set NXTGRD_MAX_FILE "${NXTGRD_PATH}/rcworst/Tech/rcworst_CCworst_T/cln6_1p11m_1x1xa1ya5y2z_mim_ut-alrdl_rcworst_CCworst_T.nxtgrd"
-set NXTGRD_MAP 			"/data/N6/n6pdk/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/StarRCMap/PRTF_ICC2_N6_starrc_11M_1X1Xa1Ya5Y2Z.10b.map"
-set WRITE_GDS_LAYER_MAP_FILE 	"/data/N6/n6pdk/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/GdsOutMap_ICC2/PRTF_ICC2_N6_gdsout_11M_1X_h_1Xa_v_1Ya_h_5Y_vhvhv_2Z.10b.map"
 
-set REFERENCE_LIBRARY           "/home/harry/n6stdndm/tcbn06_bwph240l8p57cpd_base_svt_ccs.ndm /home/harry/n6stdndm/tcbn06_bwph240l8p57cpd_base_lvt_ccs.ndm /home/harry/n6stdndm/tcbn06_bwph240l8p57cpd_base_ulvt_ccs.ndm"
+
+
+set NXTGRD_MAP 			"/nfs/data/foundry/tsmc/tsmc6/apr/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/StarRCMap/PRTF_ICC2_N6_starrc_11M_1X1Xa1Ya5Y2Z.10b.map"
+set WRITE_GDS_LAYER_MAP_FILE 	"/nfs/data/foundry/tsmc/tsmc6/apr/PRTF_ICC2_6nm_001_Syn_V10b/PR_tech/Synopsys/GdsOutMap_ICC2/PRTF_ICC2_N6_gdsout_11M_1X_h_1Xa_v_1Ya_h_5Y_vhvhv_2Z.10b.map"
+
+set REFERENCE_LIBRARY           "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt_physicalonly.ndm \ 
+/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt_physicalonly.ndm \
+/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt_physicalonly.ndm \
+/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_mb_svt_100a/tcbn06_bwph240l8p57cpd_mb_svt_physicalonly.ndm "
 set PLACEMENT_CONSTRAINT        ""
 set RENAME_CELL_FILE           	"" 
 
@@ -79,10 +102,11 @@ set RENAME_CELL_FILE           	""
 ################################################################################
 set WORK_DIR               	[getenv PWD]
 set SEARCH_PATH				"./"
-set NUM_CORE				16
+set NUM_CORE				32
 
 set REPORT_QOR					true
-set REPORT_QOR_REPORT_POWER		false
+set REPORT_QOR_REPORT_POWER		true
+
 
 #############################
 ### 	Other setting 	  ###
@@ -107,8 +131,8 @@ set PVT_FF  "ffgnp_0p825v_125c_cbest_CCbest_T"
 set PVT_TT  "tt_0p75v_85c_typical"
 set PVT_SS  "ssgnp_0p675v_m40c_cworst_CCworst_T"
 
-set DB_FF   "/data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_FF}_ccs.db /data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_FF}_ccs.db /data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_FF}_ccs.db"
-set DB_TT   "/data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_TT}_ccs.db /data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_TT}_ccs.db /data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_TT}_ccs.db"
-set DB_SS   "/data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_SS}_ccs.db /data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_SS}_ccs.db /data/N6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_SS}_ccs.db"
+set DB_FF   "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_FF}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_FF}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_FF}_ccs.db"
+set DB_TT   "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_TT}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_TT}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_TT}_ccs.db"
+set DB_SS   "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_SS}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_SS}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_SS}_ccs.db"
 
-# set_app_var link_library "${DB_FF} ${DB_TT} ${DB_SS}"
+set_app_var link_library "${DB_FF} ${DB_TT} ${DB_SS}"

@@ -1,4 +1,4 @@
-set SCRIPT ../script
+set SCRIPT ../../../script
 
 puts "INFO: Sourcing ${SCRIPT}/project_setup.tcl"
 source ${SCRIPT}/project_setup.tcl
@@ -53,4 +53,3 @@ if {$REPORT_QOR} {
 
 
 exit
-

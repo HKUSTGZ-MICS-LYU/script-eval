@@ -1,4 +1,4 @@
-source ../script/project_setup.tcl
+source  ../../../script/project_setup.tcl
 
 set power_enable_analysis true
 
