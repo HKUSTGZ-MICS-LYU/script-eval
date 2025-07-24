@@ -1,18 +1,23 @@
+#!/bin/bash
 design_name=$1
-rtl_commit=$2
+architecture_config=$2
 clock_freq=$3
 backend_dse=$4
+agent_dir=$5
+tag=$6
 cd build
 #eval_commit=$(git describe --dirty --always)
-build_dir=${design_name}_${rtl_commit}_${clock_freq}
+build_dir=${design_name}_${architecture_config}_${clock_freq}
 cd ${build_dir}
-mkdir -p ${design_name}_${rtl_commit}_${clock_freq}MHz_${backend_dse}bkdse_build/{log,rpt,out,db}
-cd ${design_name}_${rtl_commit}_${clock_freq}MHz_${backend_dse}bkdse_build
+mkdir -p ${design_name}_${architecture_config}_${clock_freq}MHz_${tag}_${backend_dse}bkdse_build/{log,rpt,out,db}
+cd ${design_name}_${architecture_config}_${clock_freq}MHz_${tag}_${backend_dse}bkdse_build
 echo -n $clock_freq > target_MHz
 echo -n $design_name > design_name
 echo -n $backend_dse > backend_dse
+echo -n $agent_dir > agent_dir
 clock_period=$(printf '%f' $(echo "scale=4; 1000/$clock_freq" | bc))
 
+echo -n $architecture_config > $agent_dir/architecture_config
 # load tools
 #module load vcs/V-2023.12-SP1-1 verdi/V-2023.12-SP1-1 fusioncompiler/U-2022.12-SP3 icvalidator/U-2022.12-SP2 prime/U-2022.12-SP3
 # simulate the design first
@@ -25,12 +30,11 @@ clock_period=$(printf '%f' $(echo "scale=4; 1000/$clock_freq" | bc))
 
 # # run fc
 fc_shell -no_log -f ../../../script/read_rtl.tcl | tee ./log/read_rtl.log
-#fc_shell -no_log -f ../../../script/read_rtl.tcl | tee ./log/read_rtl.log
-# fc_shell -no_log -f ../../../script/floorplan.tcl | tee ./log/floorplan.log
-# fc_shell -no_log -f ../../../script/placement.tcl | tee ./log/placement.log
-# fc_shell -no_log -f ../../../script/cts.tcl | tee ./log/cts.log
-# fc_shell -no_log -f ../../../script/route.tcl | tee ./log/route.log
-# fc_shell -no_log -f ../../../script/chipfinish.tcl | tee ./log/chipfinish.log
+fc_shell -no_log -f ../../../script/floorplan.tcl | tee ./log/floorplan.log
+fc_shell -no_log -f ../../../script/placement.tcl | tee ./log/placement.log
+fc_shell -no_log -f ../../../script/cts.tcl | tee ./log/cts.log
+fc_shell -no_log -f ../../../script/route.tcl | tee ./log/route.log
+fc_shell -no_log -f ../../../script/chipfinish.tcl | tee ./log/chipfinish.log
 
 # # # generate deposit file
 # # sed -i 's/ /\n/g' ./out/salsa8d.no_reset_reg_list && sed -r 's/(.*)/$deposit(dut_i.\1, 0);/g' ./out/salsa8d.no_reset_reg_list | sed 's/\//./g' > deposit.v

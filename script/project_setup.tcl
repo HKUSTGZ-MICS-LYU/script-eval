@@ -18,15 +18,22 @@ set design_name_f [open "./design_name" r]
 set design_name [read $design_name_f]
 close $design_name_f
 
-# ################################################################################
-# ### Backend Dse Config
-# ################################################################################
-# set group_f [open "./backend_dse" r]
-# set group [read $group_f]
-# source ${SCRIPT_DIR}/backend_dse.tcl
-# set params [load_config $group]
-# puts "utilization: [dict get $params utilization]"
-# ################################################################################
+################################################################################
+### Read DIR
+set agent_dir_f [open "./agent_dir" r]
+set agent_dir [read $agent_dir_f]
+puts "INFO: Agent directory is ${agent_dir}"
+################################################################################
+
+################################################################################
+### Backend Dse Config
+################################################################################
+set group_f [open "./backend_dse" r]
+set group [read $group_f]
+source ${agent_dir}/backend_dse.tcl
+set params [load_config $group]
+puts "utilization: [dict get $params utilization]"
+################################################################################
 
 ###########################################################################
 set UTIL				"[dict get $params utilization]"
