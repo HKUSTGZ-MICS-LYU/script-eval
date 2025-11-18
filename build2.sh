@@ -30,11 +30,11 @@ clock_period=$(printf '%f' $(echo "scale=4; 1000/$clock_freq" | bc))
 
 # run fc
 fc_shell -no_log -f ../../../script/read_rtl.tcl | tee ./log/read_rtl.log
-fc_shell -no_log -f ../../../script/floorplan.tcl | tee ./log/floorplan.log
-fc_shell -no_log -f ../../../script/placement.tcl | tee ./log/placement.log
-fc_shell -no_log -f ../../../script/cts.tcl | tee ./log/cts.log
-fc_shell -no_log -f ../../../script/route.tcl | tee ./log/route.log
-fc_shell -no_log -f ../../../script/chipfinish.tcl | tee ./log/chipfinish.log
+# fc_shell -no_log -f ../../../script/floorplan.tcl | tee ./log/floorplan.log
+# fc_shell -no_log -f ../../../script/placement.tcl | tee ./log/placement.log
+# fc_shell -no_log -f ../../../script/cts.tcl | tee ./log/cts.log
+# fc_shell -no_log -f ../../../script/route.tcl | tee ./log/route.log
+# fc_shell -no_log -f ../../../script/chipfinish.tcl | tee ./log/chipfinish.log
 
 # # # generate deposit file
 # # sed -i 's/ /\n/g' ./out/salsa8d.no_reset_reg_list && sed -r 's/(.*)/$deposit(dut_i.\1, 0);/g' ./out/salsa8d.no_reset_reg_list | sed 's/\//./g' > deposit.v
