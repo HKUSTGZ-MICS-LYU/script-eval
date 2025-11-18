@@ -1,3 +1,6 @@
+#################################
+#Placement Script
+#################################
 set SCRIPT_DIR ../../../script
 
 puts "INFO: Sourcing ${SCRIPT_DIR}/project_setup.tcl"
@@ -25,6 +28,8 @@ source -e $CLOCK_NDR_RULE_FILE
 
 puts "INFO: Clock NDR modeling at place_opt"
 mark_clock_trees -routing_rules
+
+
 
 set rm_clock_period $CLOCK_PERIOD
 set_clock_tree_options -target_skew $TARGET_SKEW

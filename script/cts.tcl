@@ -1,3 +1,6 @@
+#################################
+#CTS Script
+#################################
 set SCRIPT ../../../script
 
 puts "INFO: Sourcing ${SCRIPT}/project_setup.tcl"

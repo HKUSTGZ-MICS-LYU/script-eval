@@ -63,6 +63,7 @@ puts "INFO: Floorplan creation"
 initialize_floorplan -shape [dict get $params fp_shape] -core_utilization [expr $UTIL/100.0] -side_ratio {1 1} \
 -core_offset [list $boundary_offset_x $boundary_offset_y]   -flip_first_row true
 
+
 puts "INFO: Wire track creation"
 source $TCL_TRACK_CREATION_FILE
 
@@ -73,7 +74,7 @@ if {[sizeof_collection [get_flat_cells -quiet -filter "design_type==macro"]] > 0
 	set_locked_objects $macro_cells -unlock
 	set_macro_constraints -align_pins_to_tracks $macro_cells
 	set_snap_setting -macro_by_color true
-	#create_placement -floorplan
+	create_placement -floorplan
 	snap_objects $macro_cells
 	report_placement -hard_macro_pin_track_violations constrained_only
 	check_finfet_grid

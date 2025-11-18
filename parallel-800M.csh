@@ -1,10 +1,10 @@
 #!/bin/csh
 
-set total = 100        # 总任务数
-set max_parallel = 20   # 最大并行数
+set total = 200        # 总任务数
+set max_parallel = 50   # 最大并行数
 set current = 0         # 起始任务编号
-set lock_dir = "/nfs/share/home/tongliu/processordataset/script-eval/lock"  # 锁目录（使用PID防冲突）
-set log_file = "/nfs/share/home/tongliu/processordataset/script-eval/parallele.log"  # 日志文件
+set lock_dir = "/nfs/share/home/tongliu/processordataset/script-eval/lock800"  # 锁目录（使用PID防冲突）
+set log_file = "/nfs/share/home/tongliu/processordataset/script-eval/parallele-800.log"  # 日志文件
 # 初始化日志系统
 echo "========== 任务监控日志 ==========" > $log_file
 echo "总任务数: $total" >> $log_file
@@ -29,7 +29,7 @@ while ($current < $total)
             # 创建任务锁
             set task_lock = "${lock_dir}/task_${current}.lock"
             mkdir -p $task_lock  # 原子操作创建锁
-            (echo "[START] 任务 $current " >> $log_file ; bsub -n 4 -Is ./build2.sh RocketTile $current 100 1 ; rm -rf $task_lock ; echo "[END]   任务 $current " >> $log_file ) &
+            (echo "[START] 任务 $current " >> $log_file ; bsub -n 4 -Is ./build2.sh RocketTile $current 800 1 ; rm -rf $task_lock ; echo "[END]   任务 $current " >> $log_file ) &
             @ current++
             @ needed--
         end

@@ -26,33 +26,37 @@ set scenarios [get_attribute [get_scenarios ] name]
 foreach scenario ${scenarios} {
     current_scenario ${scenario}
 
-    create_clock -period ${CLOCK_PERIOD} -name clk [get_ports clk]
+    create_clock -period ${CLOCK_PERIOD} -name clock [get_ports clock]
 
-    set_clock_uncertainty -setup 0.1 [get_clocks clk]
-    set_clock_transition -rise 0.1 [get_clocks clk]
-    set_clock_transition -fall 0.1 [get_clocks clk]
+    set_clock_uncertainty -setup 0.1 [get_clocks clock]
+    set_clock_transition -rise 0.1 [get_clocks clock]
+    set_clock_transition -fall 0.1 [get_clocks clock]
 
-    # set_input_delay 0.1 -clock clk [get_ports load]
+    # set_input_delay 0.1 -clock clock [get_ports load]
     # set_driving_cell -lib_cell BUFFD10BWP240H8P57CPDSVT [get_ports load]
-    # set_input_delay 0.1 -clock clk [get_ports state_in]
+    # set_input_delay 0.1 -clock clock [get_ports state_in]
     # set_driving_cell -lib_cell BUFFD10BWP240H8P57CPDSVT [get_ports state_in]
 
-    # set_output_delay 0.1 -clock clk [get_ports done]
-    # set_output_delay 0.1 -clock clk [get_ports state_out]
+    # set_output_delay 0.1 -clock clock [get_ports done]
+    # set_output_delay 0.1 -clock clock [get_ports state_out]
 }
 
 current_corner Fast
 current_scenario FUNC_Fast
-set_operating_conditions ${PVT_FF}
+set_operating_conditions ${PVT_FF} 
 
 current_corner Typical
 current_scenario FUNC_Typical
-set_operating_conditions ${PVT_TT}
+set_operating_conditions ${PVT_TT} 
 
 current_corner Slow
 current_scenario FUNC_Slow
-set_operating_conditions ${PVT_SS}
+set_operating_conditions ${PVT_SS} 
 
-set_scenario_status FUNC_Fast    -setup false -hold true  -leakage_power false -dynamic_power true  -max_transition false  -max_capacitance true   -active true
+# set_scenario_status FUNC_Fast    -setup false -hold true  -leakage_power false -dynamic_power true  -max_transition false  -max_capacitance true   -active true
+# set_scenario_status FUNC_Typical -all -active true
+# set_scenario_status FUNC_Slow    -setup true  -hold false -leakage_power true  -dynamic_power true  -max_transition true   -max_capacitance false  -active true
+
+set_scenario_status FUNC_Fast    -all -active true
 set_scenario_status FUNC_Typical -all -active true
-set_scenario_status FUNC_Slow    -setup true  -hold false -leakage_power true  -dynamic_power true  -max_transition true   -max_capacitance false  -active true
+set_scenario_status FUNC_Slow    -all -active true

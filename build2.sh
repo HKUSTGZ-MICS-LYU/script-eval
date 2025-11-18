@@ -3,21 +3,21 @@ design_name=$1
 architecture_config=$2
 clock_freq=$3
 backend_dse=$4
-agent_dir=$5
-tag=$6
+#agent_dir=$5
+#tag=$6
 cd build
 #eval_commit=$(git describe --dirty --always)
-build_dir=${design_name}_${architecture_config}_${clock_freq}
+build_dir=${design_name}_${architecture_config}
 cd ${build_dir}
-mkdir -p ${design_name}_${architecture_config}_${clock_freq}MHz_${tag}_${backend_dse}bkdse_build/{log,rpt,out,db}
-cd ${design_name}_${architecture_config}_${clock_freq}MHz_${tag}_${backend_dse}bkdse_build
+mkdir -p ${design_name}_${architecture_config}_${clock_freq}MHz_${backend_dse}bkdse_build/{log,rpt,out,db}
+cd ${design_name}_${architecture_config}_${clock_freq}MHz_${backend_dse}bkdse_build
 echo -n $clock_freq > target_MHz
 echo -n $design_name > design_name
 echo -n $backend_dse > backend_dse
-echo -n $agent_dir > agent_dir
+#echo -n $agent_dir > agent_dir
 clock_period=$(printf '%f' $(echo "scale=4; 1000/$clock_freq" | bc))
 
-echo -n $architecture_config > $agent_dir/architecture_config
+#echo -n $architecture_config > $agent_dir/architecture_config
 # load tools
 #module load vcs/V-2023.12-SP1-1 verdi/V-2023.12-SP1-1 fusioncompiler/U-2022.12-SP3 icvalidator/U-2022.12-SP2 prime/U-2022.12-SP3
 # simulate the design first
@@ -28,7 +28,7 @@ echo -n $architecture_config > $agent_dir/architecture_config
 #  	../rtl/common.sv \
 #  	../rtl/salsa8d.sv
 
-# # run fc
+# run fc
 fc_shell -no_log -f ../../../script/read_rtl.tcl | tee ./log/read_rtl.log
 fc_shell -no_log -f ../../../script/floorplan.tcl | tee ./log/floorplan.log
 fc_shell -no_log -f ../../../script/placement.tcl | tee ./log/placement.log

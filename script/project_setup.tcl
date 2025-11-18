@@ -19,18 +19,11 @@ set design_name [read $design_name_f]
 close $design_name_f
 
 ################################################################################
-### Read DIR
-set agent_dir_f [open "./agent_dir" r]
-set agent_dir [read $agent_dir_f]
-puts "INFO: Agent directory is ${agent_dir}"
-################################################################################
-
-################################################################################
 ### Backend Dse Config
 ################################################################################
 set group_f [open "./backend_dse" r]
 set group [read $group_f]
-source ${agent_dir}/backend_dse.tcl
+source ${SCRIPT_DIR}/backend_dse.tcl
 set params [load_config $group]
 puts "utilization: [dict get $params utilization]"
 ################################################################################
@@ -99,7 +92,22 @@ set WRITE_GDS_LAYER_MAP_FILE 	"/nfs/data/foundry/tsmc/tsmc6/apr/PRTF_ICC2_6nm_00
 set REFERENCE_LIBRARY           "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt_physicalonly.ndm \ 
 /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt_physicalonly.ndm \
 /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt_physicalonly.ndm \
-/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_mb_svt_100a/tcbn06_bwph240l8p57cpd_mb_svt_physicalonly.ndm "
+/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Back_End/ndm/tcbn06_bwph240l8p57cpd_mb_svt_100a/tcbn06_bwph240l8p57cpd_mb_svt_physicalonly.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts5n7lvta32x22m4wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts5n7lvta32x23m4wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts5n7lvta512x17m4wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta1024x17m4wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta1024x64m4wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta256x32m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta512x32m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta512x8m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta64x21m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts1n7hslvta64x22m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts6n7lvtb16x56m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts6n7lvtb16x64m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts6n7lvtb256x64m2wbzhocp.ndm \
+/nfs/share/home/tongliu/processordataset/sram/ndm/ts6n7lvtb512x64m2wbzhocp.ndm
+"
 set PLACEMENT_CONSTRAINT        ""
 set RENAME_CELL_FILE           	"" 
 
@@ -142,4 +150,12 @@ set DB_FF   "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_powe
 set DB_TT   "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_TT}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_TT}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_TT}_ccs.db"
 set DB_SS   "/nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_svt_100a/tcbn06_bwph240l8p57cpd_base_svt${PVT_SS}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_lvt_100a/tcbn06_bwph240l8p57cpd_base_lvt${PVT_SS}_ccs.db /nfs/data/foundry/tsmc/tsmc6/TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn06_bwph240l8p57cpd_base_ulvt_100a/tcbn06_bwph240l8p57cpd_base_ulvt${PVT_SS}_ccs.db"
 
-set_app_var link_library "${DB_FF} ${DB_TT} ${DB_SS}"
+set PVT_SRAM_FF "ffgnp_0p825v_125c_cbest_ccbest"
+set PVT_SRAM_TT "ttt_0p750v_85c_typical"
+set PVT_SRAM_SS "ssgnp_0p675v_m40c_cworst_ccworst_t"
+
+set SRAM_FF "/nfs/share/home/tongliu/processordataset/sram/ts5n7lvta32x22m4wbzhocp${PVT_SRAM_FF}.db"
+set SRAM_TT "/nfs/share/home/tongliu/processordataset/sram/ts5n7lvta32x22m4wbzhocp${PVT_SRAM_TT}.db"
+set SRAM_SS "/nfs/share/home/tongliu/processordataset/sram/ts5n7lvta32x22m4wbzhocp${PVT_SRAM_SS}.db"
+
+set_app_var link_library "${DB_FF} ${DB_TT} ${DB_SS} "

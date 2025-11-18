@@ -1,25 +1,18 @@
-
-
+#################################
+#Read Rtl Script
+#################################
 set SCRIPT_DIR ../../../script
 
-
-################################################################################
-### Read DIR
-set agent_dir_f [open "./agent_dir" r]
-set agent_dir [read $agent_dir_f]
-puts "INFO: Agent directory is ${agent_dir}"
-################################################################################
 
 ################################################################################
 ### Backend Dse Config
 ################################################################################
 set group_f [open "./backend_dse" r]
 set group [read $group_f]
-source ${agent_dir}/backend_dse.tcl
+source ${SCRIPT_DIR}/backend_dse.tcl
 set params [load_config $group]
-puts "utilization: [dict get $params utilization]"
-################################################################################
 
+################################################################################
 
 puts "INFO: Sourcing ${SCRIPT_DIR}/project_setup.tcl"
 source ${SCRIPT_DIR}/project_setup.tcl
@@ -33,6 +26,7 @@ puts "INFO: Design creation"
 if {[file exists $DESIGN_LIBRARY]} { file delete -force $DESIGN_LIBRARY }
 
 set_app_options -name lib.configuration.cdpl_host -value "-hosts localhost:${NUM_CORE}"
+
 
 create_lib $DESIGN_LIBRARY -tech $TECH_FILE -ref_libs $REFERENCE_LIBRARY
 
